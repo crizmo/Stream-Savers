@@ -137,7 +137,29 @@ html {
     margin-top: 30px;
 }
 
-@media screen and (max-width: 768px) {
+/* add hidden */
+
+.ytvideo {
+    margin-left: 200px;
+}
+
+.addsubmit {
+    /* margin-right: 500px; */
+    margin-left: 38%;
+    margin-bottom: 5px;
+    padding-right: 100px;
+    padding-left: 100px;
+}
+
+.finishsubmit {
+    padding-left: 80px;
+    padding-right: 80px;
+    margin-left: 39.3%;
+    margin-top: 20px;
+    color: black;
+}
+
+@media screen and (max-width: 1000px) {
 
     .card {
         margin: 10px;
@@ -306,6 +328,34 @@ html {
         padding-left: 10px;
         padding-right: 10px;
         margin-left: 27%;
+    }
+
+    /* add page hidden */
+
+    .ytvideo {
+        height: auto;
+        width: 70%;
+        margin-left: 40px;
+    }
+
+    .addsubmit {
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-left: 25%;
+    }
+
+    .finishsubmit {
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-left: 23%;
+    }
+
+    .form-control {
+        font-size: 13px;
+        font-weight: bold;
+        font-family: 'Courier New',
+        Courier,
+        monospace;
     }
 }
 
