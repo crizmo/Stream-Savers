@@ -10,9 +10,22 @@ const io = require('socket.io')(http);
 const gotiny = require("gotiny")
 
 let servers = "http://localhost:3000/"
+let serversToIdentifier = "stream-test.free-24-7-loops.repl.co|1"
 let secretPath = process.env.secretPath
 
+// let {
+//     servers,
+//     secretPath,
+//     serversToIdentifier
+// } = process.env
+
 servers = servers.split(',')
+serversToIdentifier = serversToIdentifier.split(',')
+let temp = {}
+for (let i = 0; i < serversToIdentifier.length; i++) {
+    temp[Number(serversToIdentifier[i].split('|')[1])] = serversToIdentifier[i].split('|')[0]
+}
+serversToIdentifier = temp
 
 let capacity = 0
 let capacityByServer = {}
@@ -34,8 +47,29 @@ app.get('/add', (req, res) => {
     })
 })
 
-app.get('/testManagement', (req, res) => {
-    res.render('management')
+app.get('/manageInfo/:id', (req, res) => {
+
+    /*if(serversToIdentifier[req.params.id.split('-')[0]]){
+      axios.get(`https://${serversToIdentifier[req.params.id.split('-')[0]]}/${process.env.secretPath}/info/${req.params.id}`).then((r)=>{
+        res.json(r.data)
+      }).catch((r)=>{
+        res.status(400).send(`Invalid Management Key`)
+      })
+    }else{
+      console.log('oh')
+      res.status(400).send(`Invalid Management Key`)
+    }*/
+
+    res.json({
+        captcha: Date.now() - 70000000,
+        created: Date.now()
+    })
+})
+
+app.get('/manage/:id', (req, res) => {
+    res.render('management', {
+        siteKey: process.env.hCaptchaSiteKey
+    })
 })
 
 app.post('/check', (req, res) => {
@@ -47,6 +81,125 @@ app.post('/check', (req, res) => {
         })
     } else {
         res.status(400).json({ can: false })
+    }
+})
+
+app.post('/captcha', async (req, res) => {
+    if (req.body && req.body.hKey && req.body.mk) {
+        verify(process.env.hCaptchaSecret, req.body.hKey)
+            .then(async (data) => {
+                if (data.success === true) {
+                    if (serversToIdentifier[req.body.mk.split('-')[0]]) {
+                        axios.post(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}/captcha`, {
+                            manageKey: req.body.mk
+                        }).then(() => {
+                            res.send(`OK`)
+                        }).catch(() => {
+                            res.status(400).send(`Invalid Management Key`)
+                        })
+                    } else {
+                        res.status(400).send(`Invalid Management Key`)
+                    }
+                } else {
+                    res.status(400).send(`*le gasp* You ARE a robot!`)
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+                res.status(400).send(`*le gasp* You ARE a robot!`)
+            });
+
+    } else {
+        res.status(500).send(`Server Error`)
+    }
+})
+
+app.post('/apply', async (req, res) => {
+    if (req.body && req.body.hKey && req.body.links && req.body.mk) {
+        verify(process.env.hCaptchaSecret, req.body.hKey)
+            .then(async (data) => {
+                if (data.success === true) {
+                    let urls = req.body.links
+                    let shortURLs = []
+                    if (urls.length < 16 && urls.length > 0) {
+                        can = ``
+
+                        for (let i = 0; i < urls.length; i++) {
+                            if (urls[i].length < 200) {
+                                try {
+                                    await checkURL(urls[i])
+                                } catch (err) {
+                                    can = `Error checking URL ${urls[i]}`
+                                    break;
+                                }
+                            } else {
+                                can = `URLs must be under 200 characters in length`
+                                break;
+                            }
+                        }
+                        if (can == ``) {
+                            for (let i = 0; i < urls.length; i++) {
+                                try {
+                                    const res = await gotiny.set(urls[i])
+                                    shortURLs.push(res[0].code)
+                                } catch (err) {
+                                    can = `Error shortening URL ${urls[i]}`
+                                    break;
+                                }
+                            }
+                            if (can == ``) {
+                                // Yay
+                                if (serversToIdentifier[req.body.mk.split('-')[0]]) {
+                                    axios.put(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}`, {
+                                        manageKey: req.body.mk,
+                                        urls: shortURLs
+                                    }).then(() => {
+                                        res.send(`OK`)
+                                    }).catch(() => {
+                                        res.status(400).send(`Invalid Management Key`)
+                                    })
+                                } else {
+                                    res.status(400).send(`Invalid Management Key`)
+                                }
+                            } else {
+                                res.status(400).send(can)
+                            }
+                        } else {
+                            res.status(400).send(can)
+                        }
+                    } else {
+                        res.status(400).send(`You must have 1-15 URLs`)
+                    }
+                } else {
+                    res.status(400).send(`*le gasp* You ARE a robot!`)
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+                res.status(400).send(`*le gasp* You ARE a robot!`)
+            });
+
+    } else {
+        res.status(500).send(`Server Error`)
+    }
+})
+
+app.delete('/stop', (req, res) => {
+    if (req.body && req.body.streamKey && req.body.mk) {
+        if (serversToIdentifier[req.body.mk.split('-')[0]]) {
+            axios.post(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}/del`, {
+                streamKey: req.body.streamKey
+            }).then(() => {
+                res.send(`OK`)
+            }).catch((e) => {
+                console.log(e)
+                res.status(400).send(`Invalid Management Key`)
+            })
+        } else {
+            res.status(400).send(`Invalid Management Key`)
+        }
+    } else {
+        res.status(400).send(`Missing parameters`)
     }
 })
 
