@@ -79,12 +79,12 @@
                             <form id='keyForm'>
                                 <div class="form-group">
                                     <label for="streamKey">Stream Key</label>
-                                    <input type="text" class="form-control" id="streamKey" name="streamKey"
+                                    <input type="password" class="form-control" id="streamKey" name="streamKey"
                                         placeholder="Enter Stream Key" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="streamKey">Stream URL ( optional )</label>
-                                    <input type="text" class="form-control" id="streamURL" name="streamURL"
+                                    <input type="url" class="form-control" id="streamURL" name="streamURL"
                                         placeholder="Enter Stream URL">
                                     <button type="submit" class="continuebtn btn btn-primary"
                                         onclick="">Continue</button>
@@ -102,10 +102,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/tfBVp0Zi2iE"
-                                title="YouTube video player" frameborder="0"
+                            <iframe class="ytvideo" width="560" height="315"
+                                src="https://www.youtube.com/embed/tfBVp0Zi2iE" title="YouTube video player"
+                                frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen style="margin-left: 200px;"></iframe>
+                                allowfullscreen></iframe>
                         </div>
                         <div class="form-group">
                             <div class="form-group text-center">
@@ -132,14 +133,14 @@
                                 <form action="" method="get" id='add'>
                                     <div class="form-group">
                                         <label for="videoLink">Add video URL</label>
-                                        <input type="text" class="form-control" id="videoLink" name="videoLink"
+                                        <input type="url" class="form-control" id="videoLink" name="videoLink"
                                             placeholder="https://example.com/cool_video.mp4" required>
                                     </div>
-                                    <button type="submit" id='add' class="btn btn-primary" onclick=""
-                                        style="padding-left: 100px; padding-right: 100px; margin-left: 38%;">Add</button>
+                                    <button type="submit" id='add' class="addsubmit btn btn-primary"
+                                        onclick="">Add</button>
                                 </form>
-                                <button type="button" class="btn btn-success" onclick="finish()"
-                                    style="padding-left: 80px; padding-right: 80px; margin-left: 39.3%; margin-top: 20px; color: black;">Finish</button>
+                                <button type="button" class="finishsubmit btn btn-success"
+                                    onclick="finish()">Finish</button>
                                 </p>
                             </div>
                         </div>
