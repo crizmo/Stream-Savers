@@ -159,6 +159,28 @@ html {
     color: black;
 }
 
+/* management */
+
+.manageadd {
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-left: 37.2%;
+}
+
+.managefinish {
+    padding-left: 80px;
+    padding-right: 80px;
+    margin-left: 38.5%;
+    margin-top: 20px;
+    color: black;
+}
+
+.managedelete {
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-left: 36%;
+}
+
 @media screen and (max-width: 1000px) {
 
     .card {
@@ -356,6 +378,28 @@ html {
         font-family: 'Courier New',
         Courier,
         monospace;
+    }
+
+    /* management */
+
+    .manageadd {
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-left: 26.2%;
+    }
+    
+    .managefinish {
+        padding-left: 40px;
+        padding-right: 40px;
+        margin-left: 27.5%;
+        margin-top: 20px;
+        color: black;
+    }
+
+    .managedelete {
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-left: 18%;
     }
 }
 
