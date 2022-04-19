@@ -95,13 +95,7 @@ io.on('connection', function (socket) {
         if (state == 1) {
             if (urls.length < 16 && urls.length > 0) {
                 state = 2
-                /*
-                checkURL(req.body.url).then(()=>{
-                  res.json({can:true})
-                }).catch(()=>{
-                  res.status(400).json({can:false})
-                })
-                */
+
                 for (let i = 0; i < urls.length; i++) {
                     update(`Checking video URLs (${i + 1}/${urls.length})...`)
                     if (urls[i].length < 200) {
