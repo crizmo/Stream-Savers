@@ -31,10 +31,18 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
 
+    <script src="https://js.hcaptcha.com/1/api.js" async></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src='../static/js/manage.js'></script>
+
     <script src="https://kit.fontawesome.com/8dc570c5d4.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-dark">
+    <div class="h-captcha" data-sitekey=<%=siteKey%>
+        data-callback="onSubmit"
+        data-size="invisible"
+        ></div>
     <nav class="navbar navbar-expand-md bg-discord navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/"><b>Stream Savers</b></a>
@@ -60,23 +68,27 @@
         </div>
     </nav>
 
-    <main>
+    <main class="managepage">
         <section class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" hidden>
                     <div class="card">
                         <div class="card-body">
                             <h1 class="card-title text-center" style="margin-bottom: 50px;">All Setup Up !</h1>
-                            <p class="card-text">Congratulations! Your stream is now up and running. Here's your
-                                management page. Every day, you'll need to come here and
-                                complete a captcha. You can also edit your videos and stop</p>
+                            <p class="card-text text-center" style='color: red;'>SAVE THE URL TO THIS PAGE OR YOUR
+                                STREAM WILL BE LOST</p>
+                            <p class="card-text text-center">Congratulations! Your stream is now up and running. Here's
+                                your
+                                management page. Every day or so, you'll need to come here and
+                                complete a captcha. You can also edit your videos and stop the stream if needed.</p>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-body">
                             <h2 class="card-title text-center" style="margin-bottom: 50px;">Captcha</h2>
-                            <p class="card-text">
-
+                            <p class="card-text text-center" id='captcha'>
+                                Your captcha will be ready in 1 hour and 9 minutes.<br>When it's ready, you will need to
+                                complete it within 15 hours, or else your stream will automatically end.
                             </p>
                         </div>
                     </div>
@@ -88,12 +100,15 @@
                                         <div class="form-group text-center">
                                             <!-- <label for="streamKey" style="color: goldenrod;" id='addedLinks'>Added
                                                 Links</label> -->
-                                            <h2 class="card-title text-center" style="margin-bottom: 30px;">Added Links
+                                            <h2 class="card-title text-center" style="margin-bottom: 30px;">Replace
+                                                videos
                                             </h2>
+                                            <p class='card-text text-center'>Add new videos here, and they'll play on
+                                                the next loop.</p>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-" style="padding-left: 20px;" id='cards'>
-                                                <div class="card" id='templateCard'>
+                                                <div class="card" id='templateCard' hidden>
                                                     <div class="card-body">
                                                         <i class="fas fa-solid fa-trash"
                                                             style="margin-right: 20px;"></i>
@@ -117,11 +132,11 @@
                                                         name="videoLink"
                                                         placeholder="https://example.com/cool_video.mp4" required>
                                                 </div>
-                                                <button type="submit" id='add' class="btn btn-primary" onclick=""
-                                                    style="padding-left: 100px; padding-right: 100px; margin-left: 36%;">Update</button>
+                                                <button type="submit" id='add' class="manageadd btn btn-primary"
+                                                    onclick="">Add</button>
                                             </form>
-                                            <button type="button" class="btn btn-success" onclick=""
-                                                style="padding-left: 80px; padding-right: 80px; margin-left: 38.5%; margin-top: 20px; color: black">Finish</button>
+                                            <button type="button" class="managefinish btn btn-success"
+                                                onclick="finish()">Apply</button>
                                             </p>
                                         </div>
                                     </div>
@@ -138,14 +153,14 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Stop Stream</h5>
                                             <p class="card-text">
-                                            <form action="" method="get">
+                                                Stream Savers will stop sending data on the next loop
+                                            <form action="" method="get" id='stopForm'>
                                                 <div class="form-group">
                                                     <label for="streamKey">Stream Key</label>
                                                     <input type="text" class="form-control" id="streamKey"
                                                         name="streamKey" placeholder="Enter Stream Key" required>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary" onclick=""
-                                                    style="padding-left: 100px; padding-right: 100px; margin-left: 38%;">
+                                                <button type="submit" class="managedelete btn btn-primary" onclick="">
                                                     Delete</button>
                                             </form>
                                             </p>
