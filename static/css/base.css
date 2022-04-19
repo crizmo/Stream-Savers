@@ -17,6 +17,7 @@ html {
     background-image: url(../img/back.jpg);
     background-size: cover;
     position: relative;
+    background-attachment: fixed;
 }
 
 .navbar-nav {
@@ -126,7 +127,18 @@ html {
     color: #1b1b1b;
 }
 
+
+/* add page */
+
+.continuebtn {
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-left: 35%;
+    margin-top: 30px;
+}
+
 @media screen and (max-width: 768px) {
+
     .card {
         margin: 10px;
     }
@@ -286,6 +298,14 @@ html {
     .how-it-works {
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+
+    /* add page */
+
+    .continuebtn {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: 27%;
     }
 }
 
