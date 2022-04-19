@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "axios": "^0.26.1",
+    "ejs": "^3.0.2",
+    "express": "^4.17.3",
+    "gotiny": "^1.4.3",
+    "hcaptcha": "^0.1.1",
+    "socket.io": "^4.4.1"
+  }
+}

@@ -1,0 +1,296 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
+
+* {
+    font-family: "Montserrat",
+    sans-serif;
+}
+
+.bg-discord {
+    background-color: #5865f200;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.bg-dark {
+    background-image: url(../img/back.jpg);
+    background-size: cover;
+    position: relative;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.nav-item {
+    margin-right: 50px;
+}
+
+.navbar {
+    padding: 20px;
+}
+
+.navbar-brand {
+    font-size: 30px;
+}
+
+/* main */
+
+.details {
+    color: white;
+    margin-top: 30px;
+}
+
+.details p {
+    color: black;
+}
+
+.button-main button{
+    background-color: black;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    margin: 50px;
+}
+
+.button-main button:hover {
+    transform: scale(1.15);
+    transition: all 0.5s ease-in-out;
+}
+
+.button-main a {
+    margin: 100px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.button-main a:hover {
+    transform: scale(1.15);
+    transition: all 0.5s ease-in-out;
+}
+
+.how-it-works {
+    margin-top: 15px;
+    margin-bottom: 50px;
+}
+
+.how-it-works h1 {
+    color: white;
+}
+
+.how-it-works p {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.card {
+    background-color: #1b1b1b;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-body {
+    background-color: #5865f200;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.card-body p {
+    font-family: 'Courier New',
+    Courier,
+    monospace;
+}
+
+
+/* footer */
+
+.foot {
+    padding-top: 30px;
+    margin-bottom: 50px;
+}
+
+.foot a {
+    font: bolder;
+    margin: 50px;
+    color: #1b1b1b;
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        margin: 10px;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+    .foot {
+        padding-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .foot a {
+        font: bolder;
+        margin: 10px
+    }
+
+    .button-main button {
+        margin: 10px;
+    }
+
+    .button-main a {
+        margin: 10px;
+    }
+
+    .how-it-works {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .how-it-works p {
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .card {
+        background-color: #1b1b1b;
+        border-radius: 10px;
+        color: white;
+        padding: 10px;
+        margin: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .card-body {
+        background-color: #5865f200;
+        border-radius: 10px;
+        padding: 10px;
+    }  
+
+    .navbar-nav {
+        margin-left: auto;
+    }
+
+    .nav-item {
+        margin-right: 10px;
+    }  
+
+    .navbar {
+        padding: 10px;
+    }
+
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    .details {
+        color: white;
+    }
+
+    .details p {
+        color: black;
+    }
+
+    .button-main button{
+        background-color: black;
+        border-radius: 10px;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        margin: 10px;
+    }
+
+    .button-main button:hover {
+        transform: scale(1.15);
+        transition: all 0.5s ease-in-out;
+    }
+
+    .button-main a {
+        margin: 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+    }
+
+    .button-main a:hover {
+        transform: scale(1.15);
+        transition: all 0.5s ease-in-out;
+    }
+
+    .how-it-works {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .how-it-works p {
+        font-size: 15px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .card {
+        background-color: #1b1b1b;
+        border-radius: 5px;
+        color: white;
+        padding: 3px;
+        margin: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .card-body {
+        background-color: #5865f200;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .card-body p {
+        font-size: 13px;
+        font-weight: lighter;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .foot {
+        padding-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .foot a {
+        font: bolder;
+        margin: 10px
+    }
+
+    .button-main button {
+        margin: 10px;
+    }
+
+    .button-main a {
+        margin: 10px;
+    }
+
+    .how-it-works {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 1450px) {
+    .nav-help-list {
+        padding-left: 60px;
+    }
+}

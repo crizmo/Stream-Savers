@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>Add</title>
+
+    <link rel="stylesheet" href="/static/css/base.css" media="screen">
+
+    <link rel="icon" type="image/png" href="static/img/favicon.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="static/img/favicon.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="static/img/favicon.png" sizes="96x96">
+    <link rel="apple-touch-icon" sizes="72x72" href="static/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="static/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="static/img/favicon.png">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+    <script src="https://kit.fontawesome.com/8dc570c5d4.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-md bg-discord navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><b>Stream Savers</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="/" style="color: black;">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="" style="color: black;">Support Server</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" style="color: black;">Stuff</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" style="color: black;">Update Logs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title text-center" style="margin-bottom: 50px;">All Setup Up !</h1>
+                            <p class="card-text">Congratulations! Your stream is now up and running. Here's your
+                                management page. Every day, you'll need to come here and
+                                complete a captcha. You can also edit your videos and stop</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title text-center" style="margin-bottom: 50px;">Captcha</h2>
+                            <p class="card-text">
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container" id='videos'>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="form-group">
+                                        <div class="form-group text-center">
+                                            <!-- <label for="streamKey" style="color: goldenrod;" id='addedLinks'>Added
+                                                Links</label> -->
+                                            <h2 class="card-title text-center" style="margin-bottom: 30px;">Added Links
+                                            </h2>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-" style="padding-left: 20px;" id='cards'>
+                                                <div class="card" id='templateCard'>
+                                                    <div class="card-body">
+                                                        <i class="fas fa-solid fa-trash"
+                                                            style="margin-right: 20px;"></i>
+                                                        <button type="submit" class="btn btn-danger" onclick=""
+                                                            style="margin-bottom: 5px; padding-right: 30px; padding-left: 30px;">Delete</button>
+                                                        <p class="card-text" style="font-size: smaller;">
+                                                            <a href=""
+                                                                target="">https://cdn.discordapp.com/attachments/437067256049172491/964348356086345778/cat_dog.story_20220415_1.mp4</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                            <form action="" method="get" id='add'>
+                                                <div class="form-group">
+                                                    <h2 class="card-title text-center" style="margin-bottom: 20px;">Add
+                                                        Video</h2>
+                                                    <input type="text" class="form-control" id="videoLink"
+                                                        name="videoLink"
+                                                        placeholder="https://example.com/cool_video.mp4" required>
+                                                </div>
+                                                <button type="submit" id='add' class="btn btn-primary" onclick=""
+                                                    style="padding-left: 100px; padding-right: 100px; margin-left: 36%;">Update</button>
+                                            </form>
+                                            <button type="button" class="btn btn-success" onclick=""
+                                                style="padding-left: 80px; padding-right: 80px; margin-left: 38.5%; margin-top: 20px; color: black">Finish</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Stop Stream</h5>
+                                            <p class="card-text">
+                                            <form action="" method="get">
+                                                <div class="form-group">
+                                                    <label for="streamKey">Stream Key</label>
+                                                    <input type="text" class="form-control" id="streamKey"
+                                                        name="streamKey" placeholder="Enter Stream Key" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" onclick=""
+                                                    style="padding-left: 100px; padding-right: 100px; margin-left: 38%;">
+                                                    Delete</button>
+                                            </form>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

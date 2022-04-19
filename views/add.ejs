@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>Add</title>
+
+    <link rel="stylesheet" href="/static/css/base.css" media="screen">
+
+    <link rel="icon" type="image/png" href="static/img/favicon.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="static/img/favicon.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="static/img/favicon.png" sizes="96x96">
+    <link rel="apple-touch-icon" sizes="72x72" href="static/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="static/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="static/img/favicon.png">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+    <script src="https://js.hcaptcha.com/1/api.js" async></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <script defer src='./static/js/add.js'></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://kit.fontawesome.com/8dc570c5d4.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-dark">
+    <div class="h-captcha" data-sitekey=<%=siteKey%>
+        data-callback="onSubmit"
+        data-size="invisible"
+        ></div>
+    <nav class="navbar navbar-expand-md bg-discord navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><b>Stream Savers</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" style="color: black;">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" style="color: black;">Support Server</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" style="color: black;">Stuff</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" style="color: black;">Update Logs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="container" id='details'>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Stream</h5>
+                            <p class="card-text">
+                            <form id='keyForm'>
+                                <div class="form-group">
+                                    <label for="streamKey">Stream Key</label>
+                                    <input type="text" class="form-control" id="streamKey" name="streamKey"
+                                        placeholder="Enter Stream Key" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="streamKey">Stream URL ( optional )</label>
+                                    <input type="text" class="form-control" id="streamURL" name="streamURL"
+                                        placeholder="Enter Stream URL">
+                                </div>
+                                <button type="submit" class="btn btn-primary" onclick=""
+                                    style="padding-left: 100px; padding-right: 100px; margin-left: 38%;">Continue</button>
+                            </form>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id='videos' hidden>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/tfBVp0Zi2iE"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen style="margin-left: 200px;"></iframe>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group text-center">
+                                <hr color="white">
+                                <label for="streamKey" style="color: goldenrod;" hidden id='addedLinks'>Added
+                                    Links</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-" style="padding-left: 20px;" id='cards'>
+                                    <div class="card" hidden id='templateCard'>
+                                        <div class="card-body">
+                                            <i class="fas fa-solid fa-trash" style="margin-right: 20px;"></i>
+                                            <button type="submit" class="btn btn-danger" onclick=""
+                                                style="margin-right: 500px; margin-bottom: 5px; padding-right: 30px; padding-left: 30px;">Delete</button>
+                                            <p class=" card-text" style="font-size: smaller;">
+                                                <a href="" target="">https://www.twitch.tv/streams/streamKey</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                <form action="" method="get" id='add'>
+                                    <div class="form-group">
+                                        <label for="videoLink">Add video URL</label>
+                                        <input type="text" class="form-control" id="videoLink" name="videoLink"
+                                            placeholder="https://example.com/cool_video.mp4" required>
+                                    </div>
+                                    <button type="submit" id='add' class="btn btn-primary" onclick=""
+                                        style="padding-left: 100px; padding-right: 100px; margin-left: 38%;">Add</button>
+                                </form>
+                                <button type="button" class="btn btn-success" onclick="finish()"
+                                    style="padding-left: 80px; padding-right: 80px; margin-left: 39.3%; margin-top: 20px; color: black;">Finish</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
