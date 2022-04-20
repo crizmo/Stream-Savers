@@ -1,6 +1,10 @@
 # Stream Savers main website
 The main website for Stream Savers. This does not contain the streaming server source code.
 
+Minimal loop streaming program: [Click here](https://github.com/codingMASTER398/Stream-Savers-minimal-loop-streaming)
+
+Streaming Server: [Click here](https://github.com/codingMASTER398/Stream-Savers-Streaming-Server)
+
 ## Setup
 - Node.js 16+ reccomended
 - Install a process.env handler
