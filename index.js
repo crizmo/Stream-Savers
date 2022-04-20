@@ -13,11 +13,6 @@ let servers = "http://localhost:3000/"
 let serversToIdentifier = "stream-test.free-24-7-loops.repl.co|1"
 let secretPath = process.env.secretPath
 
-// let {
-//     servers,
-//     secretPath,
-//     serversToIdentifier
-// } = process.env
 
 servers = servers.split(',')
 serversToIdentifier = serversToIdentifier.split(',')
@@ -73,7 +68,7 @@ app.get('/manage/:id', (req, res) => {
 })
 
 app.post('/check', (req, res) => {
-    if (req.body && req.body.url && req.body.url.length < 200) {
+    if (req.body && req.body.url && req.body.url.length < 300) {
         checkURL(req.body.url).then(() => {
             res.json({ can: true })
         }).catch(() => {
@@ -125,7 +120,7 @@ app.post('/apply', async (req, res) => {
                         can = ``
 
                         for (let i = 0; i < urls.length; i++) {
-                            if (urls[i].length < 200) {
+                            if (urls[i].length < 300) {
                                 try {
                                     await checkURL(urls[i])
                                 } catch (err) {
@@ -133,7 +128,7 @@ app.post('/apply', async (req, res) => {
                                     break;
                                 }
                             } else {
-                                can = `URLs must be under 200 characters in length`
+                                can = `URLs must be under 300 characters in length`
                                 break;
                             }
                         }
@@ -251,7 +246,7 @@ io.on('connection', function (socket) {
 
                 for (let i = 0; i < urls.length; i++) {
                     update(`Checking video URLs (${i + 1}/${urls.length})...`)
-                    if (urls[i].length < 200) {
+                    if (urls[i].length < 300) {
                         try {
                             await checkURL(urls[i])
                         } catch (err) {
@@ -259,14 +254,14 @@ io.on('connection', function (socket) {
                             break;
                         }
                     } else {
-                        ohNo('URLS must be under 200 characters in length.');
+                        ohNo('URLS must be under 300 characters in length.');
                         break;
                     }
                 }
                 if (state == 2) {
                     for (let i = 0; i < urls.length; i++) {
                         update(`Shortening video URLs (${i + 1}/${urls.length})...`)
-                        if (urls[i].length < 200) {
+                        if (urls[i].length < 300) {
                             try {
                                 const res = await gotiny.set(urls[i])
                                 shortURLs.push(res[0].code)
@@ -275,7 +270,7 @@ io.on('connection', function (socket) {
                                 break;
                             }
                         } else {
-                            ohNo('URLS must be under 200 characters in length.');
+                            ohNo('URLS must be under 300 characters in length.');
                             break;
                         }
                     }
