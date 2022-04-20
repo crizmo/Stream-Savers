@@ -159,6 +159,17 @@ html {
     color: black;
 }
 
+.delicon {
+    margin-right: 20px;
+}
+
+.addedlinks button {
+    margin-right: 500px;
+    margin-bottom: 5px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
 /* management */
 
 .manageadd {
@@ -406,5 +417,15 @@ html {
 @media screen and (max-width: 1450px) {
     .nav-help-list {
         padding-left: 60px;
+    }
+
+    .delicon {
+        margin-left: 1px;
+    }
+
+    .addedlinks button {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-left: 20%;
     }
 }
