@@ -10,7 +10,7 @@ const io = require('socket.io')(http);
 const gotiny = require("gotiny")
 
 let servers = "http://localhost:3000/"
-let serversToIdentifier = "stream-test.free-24-7-loops.repl.co|1"
+let serversToIdentifier = "server-1.free-24-7-loops.repl.co|1"
 let secretPath = process.env.secretPath
 
 
