@@ -137,6 +137,11 @@ html {
     margin-top: 30px;
 }
 
+.continuebtn:hover {
+    transform: scale(1.15);
+    transition: all 0.5s ease-in-out;
+}
+
 /* add hidden */
 
 .ytvideo {
@@ -161,6 +166,11 @@ html {
 
 .delicon {
     margin-right: 20px;
+}
+
+.btn:hover {
+    transform: scale(1.15);
+    transition: all 0.5s ease-in-out;
 }
 
 .addedlinks button {
@@ -365,12 +375,6 @@ html {
 
     /* add page hidden */
 
-    .ytvideo {
-        height: auto;
-        width: 70%;
-        margin-left: 40px;
-    }
-
     .addsubmit {
         padding-left: 50px;
         padding-right: 50px;
@@ -421,6 +425,12 @@ html {
 
     .delicon {
         margin-left: 1px;
+    }
+
+    .ytvideo {
+        height: auto;
+        width: 70%;
+        margin-left: 60px;
     }
 
     .addedlinks button {
