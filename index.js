@@ -10,7 +10,7 @@ const io = require('socket.io')(http);
 const gotiny = require("gotiny")
 
 let servers = "http://localhost:3000/"
-let serversToIdentifier = "" // add your servers here
+let serversToIdentifier = "http://localhost:3000|1" // add your servers here
 let secretPath = process.env.secretPath
 
 // let {
