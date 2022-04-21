@@ -10,9 +10,14 @@ const io = require('socket.io')(http);
 const gotiny = require("gotiny")
 
 let servers = "http://localhost:3000/"
-let serversToIdentifier = "server-1.free-24-7-loops.repl.co|1"
+let serversToIdentifier = "" // add your servers here
 let secretPath = process.env.secretPath
 
+// let {
+//     servers,
+//     secretPath,
+//     serversToIdentifier
+// } = process.env
 
 servers = servers.split(',')
 serversToIdentifier = serversToIdentifier.split(',')
@@ -44,21 +49,21 @@ app.get('/add', (req, res) => {
 
 app.get('/manageInfo/:id', (req, res) => {
 
-    /*if(serversToIdentifier[req.params.id.split('-')[0]]){
-      axios.get(`https://${serversToIdentifier[req.params.id.split('-')[0]]}/${process.env.secretPath}/info/${req.params.id}`).then((r)=>{
-        res.json(r.data)
-      }).catch((r)=>{
+    if (serversToIdentifier[req.params.id.split('-')[0]]) {
+        axios.get(`https://${serversToIdentifier[req.params.id.split('-')[0]]}/${process.env.secretPath}/info/${req.params.id}`).then((r) => {
+            res.json(r.data)
+        }).catch((r) => {
+            res.status(400).send(`Invalid Management Key`)
+        })
+    } else {
+        console.log('oh')
         res.status(400).send(`Invalid Management Key`)
-      })
-    }else{
-      console.log('oh')
-      res.status(400).send(`Invalid Management Key`)
-    }*/
+    }
 
-    res.json({
-        captcha: Date.now() - 70000000,
-        created: Date.now()
-    })
+    /*res.json({
+      captcha: Date.now()-70000000,
+      created: Date.now()
+    })*/
 })
 
 app.get('/manage/:id', (req, res) => {
