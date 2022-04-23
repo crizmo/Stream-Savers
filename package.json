@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "axios": "^0.26.1",
+    "discord-webhook-node": "^1.1.8",
     "ejs": "^3.0.2",
     "express": "^4.17.3",
     "gotiny": "^1.4.3",
