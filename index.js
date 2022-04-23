@@ -9,6 +9,9 @@ const io = require('socket.io')(http);
 
 const gotiny = require("gotiny")
 
+const { Webhook } = require('discord-webhook-node');
+const hook = new Webhook(process.env.webhook);
+
 let servers = "http://localhost:3000/"
 let serversToIdentifier = "http://localhost:3000|1" // add your servers here
 let secretPath = process.env.secretPath
@@ -39,6 +42,10 @@ app.get('/', (req, res) => {
     res.render('index', {
         slots: slots
     })
+})
+
+app.get('/sitemap.xml', (req, res) => {
+    res.sendfile('./sitemap.xml')
 })
 
 app.get('/add', (req, res) => {
@@ -74,6 +81,11 @@ app.get('/manage/:id', (req, res) => {
 
 app.post('/check', (req, res) => {
     if (req.body && req.body.url && req.body.url.length < 300) {
+        try {
+            hook.send(`Someone is checking the URL ${req.body.url}`)
+        } catch {
+            console.log('hm')
+        }
         checkURL(req.body.url).then(() => {
             res.json({ can: true })
         }).catch(() => {
@@ -154,6 +166,11 @@ app.post('/apply', async (req, res) => {
                                         manageKey: req.body.mk,
                                         urls: shortURLs
                                     }).then(() => {
+                                        try {
+                                            hook.send(`A stream was updated with the new URLs ${urls.join(' ')}`)
+                                        } catch {
+                                            console.log('hm')
+                                        }
                                         res.send(`OK`)
                                     }).catch(() => {
                                         res.status(400).send(`Invalid Management Key`)
@@ -249,6 +266,12 @@ io.on('connection', function (socket) {
             if (urls.length < 16 && urls.length > 0) {
                 state = 2
 
+                try {
+                    hook.send(`Possible new stream with URLs ${urls.join(' ')}`)
+                } catch {
+                    console.log('hm')
+                }
+
                 for (let i = 0; i < urls.length; i++) {
                     update(`Checking video URLs (${i + 1}/${urls.length})...`)
                     if (urls[i].length < 300) {
@@ -323,6 +346,11 @@ io.on('connection', function (socket) {
                                     console.log(`Holy shi it's starting holy shi`)
                                     update(`Redirecting to management page...`)
                                     socket.emit('management', mk)
+                                    try {
+                                        hook.send(`New stream dispatched, look at above messages for possible video URLs.`)
+                                    } catch {
+                                        console.log('hm')
+                                    }
                                 }).catch((e) => {
                                     ohNo(e)
                                 })
