@@ -113,6 +113,21 @@ html {
     monospace;
 }
 
+.showcase {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: white;
+    font-size: larger;
+}
+
+.leftside {
+    margin-top: 170px;
+}
+
+.rightside {
+    margin-top: 170px;
+}
+
 
 /* footer */
 
@@ -340,6 +355,23 @@ html {
         font-size: 13px;
         font-weight: lighter;
         font-family: 'Courier New', Courier, monospace;
+    }
+
+    .leftside {
+        margin-top: 0px;
+        margin-left: 160px;
+        margin-bottom: 10px;
+    }
+
+    .rightside {
+        margin-top: 10px;
+        margin-left: 160px;
+    }
+
+    .showcasevideo {
+        height: auto;
+        width: 70%;
+        margin-left: 60px;
     }
 
     .foot {
