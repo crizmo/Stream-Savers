@@ -9,31 +9,27 @@
 
     <title>Add</title>
 
-    <!-- Primary Meta Tags -->
-    <title>Stream Savers</title>
-    <meta name="title" content="Add | Stream Savers">
-    <meta name="description"
-        content="Stream Savers is a 100% free service allowing you to loop streams 24/7 and LIVE to YouTube.">
+  <!-- Primary Meta Tags -->
+  <title>Stream Savers</title>
+  <meta name="title" content="Add | Stream Savers">
+  <meta name="description" content="Stream Savers is a 100% free service allowing you to loop streams 24/7 and LIVE to YouTube.">
 
-    <meta name="keywords"
-        content="stream savers,youtube loop streaming,live stream,how to livestream 24/7 on youtube,how to set up a 24 hour live stream on youtube,livestream 24/7 on youtube,stream,24/7 live streaming on youtube,24/7,how to livestream on youtube,live stream 24/7,24/7 worship live stream,live stream 24/7,how to make a 24 hour live stream">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://streamsavers.live/add">
-    <meta property="og:title" content="Add | Stream Savers">
-    <meta property="og:description"
-        content="Stream Savers is a 100% free service allowing you to loop streams 24/7 and LIVE to YouTube. Add a stream today!">
-    <meta property="og:image"
+  <meta name="keywords" content="stream savers,youtube loop streaming,live stream,how to livestream 24/7 on youtube,how to set up a 24 hour live stream on youtube,livestream 24/7 on youtube,stream,24/7 live streaming on youtube,24/7,how to livestream on youtube,live stream 24/7,24/7 worship live stream,live stream 24/7,how to make a 24 hour live stream">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://streamsavers.live/add">
+  <meta property="og:title" content="Add | Stream Savers">
+  <meta property="og:description" content="Stream Savers is a 100% free service allowing you to loop streams 24/7 and LIVE to YouTube. Add a stream today!">
+  <meta property="og:image"
         content="https://media.discordapp.net/attachments/964775926829285386/965796480826892300/SS-Box.png?width=57&height=57">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://streamsavers.live/add">
-    <meta property="twitter:title" content="Add | Stream Savers">
-    <meta property="twitter:description"
-        content="Stream Savers is a 100% free service allowing you to loop streams 24/7 and LIVE to YouTube. Add a stream today!">
-    <meta property="twitter:image" content="">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://streamsavers.live/add">
+  <meta property="twitter:title" content="Add | Stream Savers">
+  <meta property="twitter:description" content="Stream Savers is a 100% free service allowing you to loop streams 24/7 and LIVE to YouTube. Add a stream today!">
+  <meta property="twitter:image" content="">
 
     <link rel="stylesheet" href="/static/css/base.css" media="screen">
 
@@ -63,6 +59,16 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="https://kit.fontawesome.com/8dc570c5d4.js" crossorigin="anonymous"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PSJQE6EEPD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-PSJQE6EEPD');
+  </script>
 </head>
 
 <body class="bg-dark">
@@ -112,9 +118,6 @@
                                         placeholder="Enter Stream Key" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="streamKey">Stream URL ( optional )</label>
-                                    <input type="url" class="form-control" id="streamURL" name="streamURL"
-                                        placeholder="Enter Stream URL">
                                     <button type="submit" class="continuebtn btn btn-primary"
                                         onclick="">Continue</button>
                                 </div>
@@ -132,7 +135,7 @@
                     <div class="card">
                         <div class="card-body">
                             <iframe class="ytvideo" width="560" height="315"
-                                src="https://www.youtube.com/embed/ccdtgKaPGeA" title="YouTube video player"
+                                src="https://www.youtube.com/embed/eFC5L13iBn0" title="YouTube video player"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
@@ -164,7 +167,7 @@
                                     <div class="form-group">
                                         <label for="videoLink">Add video URL</label>
                                         <input type="url" class="form-control" id="videoLink" name="videoLink"
-                                            placeholder="https://example.com/cool_video.mp4" required>
+                                            placeholder="Not a YouTube video link, watch the video above" required>
                                     </div>
                                     <button type="submit" id='add' class="addsubmit btn btn-primary"
                                         onclick="">Add</button>
