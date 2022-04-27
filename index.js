@@ -9,8 +9,8 @@ const io = require('socket.io')(http);
 
 const gotiny = require("gotiny")
 
-const { Webhook } = require('discord-webhook-node');
-const hook = new Webhook(process.env.webhook);
+// const { Webhook } = require('discord-webhook-node');
+// const hook = new Webhook(process.env.webhook);
 
 let servers = "http://localhost:3000/"
 let serversToIdentifier = "http://localhost:3000|1" // add your servers here
@@ -167,7 +167,7 @@ app.post('/apply', async (req, res) => {
                                         urls: shortURLs
                                     }).then(() => {
                                         try {
-                                            hook.send(`A stream was updated with the new URLs ${urls.join(' ')}`)
+                                            // hook.send(`A stream was updated with the new URLs ${urls.join(' ')}`)
                                         } catch {
                                             console.log('hm')
                                         }
@@ -267,7 +267,7 @@ io.on('connection', function (socket) {
                 state = 2
 
                 try {
-                    hook.send(`Possible new stream with URLs ${urls.join(' ')}`)
+                    // hook.send(`Possible new stream with URLs ${urls.join(' ')}`)
                 } catch {
                     console.log('hm')
                 }
@@ -347,7 +347,7 @@ io.on('connection', function (socket) {
                                     update(`Redirecting to management page...`)
                                     socket.emit('management', mk)
                                     try {
-                                        hook.send(`New stream dispatched, look at above messages for possible video URLs.`)
+                                        // hook.send(`New stream dispatched, look at above messages for possible video URLs.`)
                                     } catch {
                                         console.log('hm')
                                     }
