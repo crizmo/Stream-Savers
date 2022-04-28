@@ -120,6 +120,10 @@ html {
     font-size: larger;
 }
 
+.showvideo {
+    margin-left: 20px;
+}
+
 .leftside {
     margin-top: 170px;
 }
@@ -368,7 +372,7 @@ html {
         margin-left: 160px;
     }
 
-    .showcasevideo {
+    .showvideo {
         height: auto;
         width: 70%;
         margin-left: 60px;
