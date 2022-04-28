@@ -121,7 +121,7 @@ html {
 }
 
 .showvideo {
-    margin-left: 20px;
+    margin-left: 40px;
 }
 
 .leftside {
@@ -363,19 +363,19 @@ html {
 
     .leftside {
         margin-top: 0px;
-        margin-left: 160px;
-        margin-bottom: 10px;
+        margin-left: 100px;
+        margin-bottom: 30px;
     }
 
     .rightside {
-        margin-top: 10px;
-        margin-left: 160px;
+        margin-top: 0px;
+        margin-left: 100px;
     }
 
     .showvideo {
-        height: auto;
+        height: 80%;
         width: 70%;
-        margin-left: 60px;
+        margin-left: 30px;
     }
 
     .foot {
