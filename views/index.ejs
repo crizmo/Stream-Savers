@@ -69,6 +69,9 @@
 
         gtag('config', 'G-PSJQE6EEPD');
     </script>
+
+    <script defer src='./static/js/index.js'>
+    </script>
 </head>
 
 <body class="bg-dark">
@@ -99,7 +102,7 @@
         </div>
     </nav>
 
-    <main>
+    <main class="container">
         <section class="details">
             <div class="container">
                 <div class="col-md-12">
@@ -127,15 +130,59 @@
                                 <button onclick="">
                                     <a href="/add">Start Streaming</a>
                                 </button>
-                                <br>
-                                <%=slots%> slots available!
-                                    <%}%>
+                                <%}%>
                     </div>
                 </div>
             </div>
         </div>
 
-        <section class="how-it-works">
+        <section>
+            <div class="container" style="padding-top: 30px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title" align="center" style="font-size: medium;">
+                                    <b>Streams available</b>
+                                </h5>
+                                <p class="card-text" align="center"
+                                    style="color: #4e9bf8; font-size: x-large; font-weight: bold;">
+                                    <%=slots%>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title" align="center" style="font-size: medium;">
+                                    <b>Streams running</b>
+                                </h5>
+                                <p class="card-text" align="center"
+                                    style="color: #4e9bf8; font-size: x-large; font-weight: bold;">
+                                    <%=running%>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title" align="center" style="font-size: medium;">
+                                    <b>Minutes streamed</b>
+                                </h5>
+                                <p class="card-text" align="center"
+                                    style="color: #4e9bf8; font-size: x-large; font-weight: bold;">
+                                    <%=minutes%>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works" style="padding-top: 30px;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -206,7 +253,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row" hidden>
             <div class="col-md-12">
                 <h5 class="showcase card-title" align="center">
                     <b>Showcase</b>
@@ -215,17 +263,17 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="leftside col-md-1">
-                                <button class="btn btn-primary">
+                                <button class="btn btn-primary" onclick="left()">
                                     <i class="fas fa-arrow-left"></i>
                                 </button>
                             </div>
                             <div class="showcasevideo col-md-10">
                                 <iframe class="showvideo" width="760" height="415"
                                     src="https://www.youtube.com/embed/eFC5L13iBn0" title="YouTube video player"
-                                    frameborder="0"></iframe>
+                                    frameborder="0" id='videoFrame'></iframe>
                             </div>
                             <div class="rightside col-md-1">
-                                <button class="btn btn-primary">
+                                <button class="btn btn-primary" onclick="right()">
                                     <i class="fas fa-arrow-right"></i>
                                 </button>
                             </div>
@@ -234,7 +282,7 @@
                 </div>
                 <div class="container">
                     <div class="col-md-12">
-                        <p class="text-center" style="color: white;">
+                        <p class="text-center" style="color: rgb(0, 0, 0);">
                             Using Stream Savers and want your stream here ? Join our <a
                                 href="https://discord.gg/AmqeuS9hwS">Discord</a>
                         </p>
@@ -248,7 +296,7 @@
 
         <!-- <a href="">Instagram</a> -->
         <a href="https://discord.gg/AmqeuS9hwS">Discord</a>
-        <a href="">Github</a>
+        <a href="https://github.com/crizmo/Stream-Savers">Github</a>
         <a href="http://tiny.cc/SSChannel">Youtube</a>
 
     </footer>
