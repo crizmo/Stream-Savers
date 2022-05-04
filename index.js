@@ -9,32 +9,30 @@ const io = require('socket.io')(http);
 
 const gotiny = require("gotiny")
 
-// All the commented code for hook & db works but it wont work locally thats why i commented it out
+const { Webhook } = require('discord-webhook-node');
+const hook = new Webhook(process.env.webhook);
 
-// const { Webhook } = require('discord-webhook-node');
-// const hook = new Webhook(process.env.webhook);
-
-// const Database = require("@replit/database")
-// const db = new Database()
+const Database = require("@replit/database")
+const db = new Database()
 //db.set("minutes", 0)
 
-// function hookSend(text) {
-//   try {
-//     hook.send(text)
-//   } catch {
-//     console.log('hm')
-//   }
-// }
+function hookSend(text) {
+  try {
+    hook.send(text)
+  } catch {
+    console.log('hm')
+  }
+}
 
-let servers = "http://localhost:3000/"
-let serversToIdentifier = "http://localhost:3000|1" // add your servers here
-let secretPath = process.env.secretPath
+// let servers = "http://localhost:3000/"
+// let serversToIdentifier = "http://localhost:3000|1"
+// let secretPath = process.env.secretPath
 
-// let {
-//   servers,
-//   secretPath,
-//   serversToIdentifier
-// } = process.env
+let {
+  servers,
+  secretPath,
+  serversToIdentifier
+} = process.env
 
 servers = servers.split(',')
 serversToIdentifier = serversToIdentifier.split(',')
@@ -105,7 +103,7 @@ app.get('/manage/:id', (req, res) => {
 
 app.post('/check', (req, res) => {
   if (req.body && req.body.url && req.body.url.length < 300) {
-    // hookSend(`Someone is checking the URL ${req.body.url}`)
+    hookSend(`Someone is checking the URL ${req.body.url}`)
 
     checkURL(req.body.url).then(() => {
       res.json({ can: true })
@@ -127,7 +125,7 @@ app.post('/captcha', async (req, res) => {
               manageKey: req.body.mk
             }).then(() => {
               res.send(`OK`)
-              // hookSend(`Someone did their captcha nice`)
+              hookSend(`Someone did their captcha nice`)
             }).catch(() => {
               res.status(400).send(`Invalid Management Key`)
             })
@@ -188,7 +186,7 @@ app.post('/apply', async (req, res) => {
                     manageKey: req.body.mk,
                     urls: shortURLs
                   }).then(() => {
-                    // hookSend(`A stream was updated with the new URLs ${urls.join(' ')}`)
+                    hookSend(`A stream was updated with the new URLs ${urls.join(' ')}`)
                     res.send(`OK`)
                   }).catch(() => {
                     res.status(400).send(`Invalid Management Key`)
@@ -226,7 +224,7 @@ app.delete('/stop', (req, res) => {
         streamKey: req.body.streamKey
       }).then(() => {
         res.send(`OK`)
-        // hookSend(`Someone deleted their stream ):::`)
+        hookSend(`Someone deleted their stream ):::`)
       }).catch((e) => {
         console.log(e)
         res.status(400).send(`Invalid Management Key`)
@@ -285,7 +283,7 @@ io.on('connection', function (socket) {
       if (urls.length < 16 && urls.length > 0) {
         state = 2
 
-        // hookSend(`Possible new stream with URLs ${urls.join(' ')}`)
+        hookSend(`Possible new stream with URLs ${urls.join(' ')}`)
 
         for (let i = 0; i < urls.length; i++) {
           update(`Checking video URLs (${i + 1}/${urls.length})...`)
@@ -361,7 +359,7 @@ io.on('connection', function (socket) {
                   console.log(`Holy shi it's starting holy shi`)
                   update(`Redirecting to management page...`)
                   socket.emit('management', mk)
-                  // hookSend(`New stream dispatched, look at above messages for possible video URLs.`)
+                  hookSend(`New stream dispatched, look at above messages for possible video URLs.`)
                 }).catch((e) => {
                   ohNo(e)
                 })
@@ -440,12 +438,12 @@ async function calculateCapacity() {
   capacityByServer = tempCapacityByServer
   slots = tempSlots
 
-  // db.get("minutes").then(value => {
-  //   db.set("minutes", value + capacity).then(() => {
-  //     console.log(`Updated minutes streamed to ${value + capacity}`)
-  //     minutes = value + capacity
-  //   });
-  // });
+  db.get("minutes").then(value => {
+    db.set("minutes", value + capacity).then(() => {
+      console.log(`Updated minutes streamed to ${value + capacity}`)
+      minutes = value + capacity
+    });
+  });
 
   setTimeout(() => {
     calculateCapacity()
