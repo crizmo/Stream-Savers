@@ -1,4 +1,4 @@
-const showcase = ["https://www.youtube.com/embed/HA2uIk1USys","https://www.youtube.com/embed/z5bo3Mjb1B4","https://www.youtube.com/embed/bift2EMRxPA","https://www.youtube.com/embed/QE8ars4huFM"]
+const showcase = ["https://www.youtube.com/embed/YsQP3Tfu4CI","https://www.youtube.com/embed/btCoA7L1S64","https://www.youtube.com/embed/z5bo3Mjb1B4","https://www.youtube.com/embed/QE8ars4huFM"]
 let now = 0
 
 function set(src){
