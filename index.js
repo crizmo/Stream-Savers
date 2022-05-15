@@ -1,5 +1,5 @@
 const runCommand = require('./runCommand.js')
-const { verify } = require('hcaptcha');
+const {verify} = require('hcaptcha');
 const axios = require('axios')
 const express = require('express')
 const app = express()
@@ -16,16 +16,18 @@ const Database = require("@replit/database")
 const db = new Database()
 //db.set("minutes", 0)
 
-function hookSend(text) {
-  try {
+process.on('unhandledRejection', console.error);
+
+function hookSend(text){
+  try{
     hook.send(text)
-  } catch {
+  }catch{
     console.log('hm')
   }
 }
 
 // let servers = "http://localhost:3000/"
-// let serversToIdentifier = "http://localhost:3000|1"
+// let serversToIdentifier = "http://localhost:3000|1" // add your servers here
 // let secretPath = process.env.secretPath
 
 let {
@@ -37,7 +39,7 @@ let {
 servers = servers.split(',')
 serversToIdentifier = serversToIdentifier.split(',')
 let temp = {}
-for (let i = 0; i < serversToIdentifier.length; i++) {
+for(let i=0;i<serversToIdentifier.length;i++){
   temp[Number(serversToIdentifier[i].split('|')[1])] = serversToIdentifier[i].split('|')[0]
 }
 serversToIdentifier = temp
@@ -48,18 +50,22 @@ let slots = 0
 let minutes = 0
 
 app.set('view engine', 'ejs');
-app.use('/static', express.static('./static'))
+app.use('/static',express.static('./static'))
 app.use(express.json())
 
 function numberWithCommas(x) {
-  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 app.get('/', (req, res) => {
-  res.render('index', {
+  res.render('index',{
     slots: slots,
     running: capacity,
     minutes: numberWithCommas(minutes)
   })
+})
+
+app.get('/nocaptcha',(req,res)=>{
+  res.sendFile(__dirname+'/nocaptcha.png')
 })
 
 app.get('/sitemap.xml', (req, res) => {
@@ -71,24 +77,24 @@ app.get('/robots.txt', (req, res) => {
 })
 
 app.get('/add', (req, res) => {
-  res.render('add', {
+  res.render('add',{
     siteKey: process.env.hCaptchaSiteKey
   })
 })
 
 app.get('/manageInfo/:id', (req, res) => {
-
-  if (serversToIdentifier[req.params.id.split('-')[0]]) {
-    axios.get(`https://${serversToIdentifier[req.params.id.split('-')[0]]}/${process.env.secretPath}/info/${req.params.id}`).then((r) => {
+  
+  if(serversToIdentifier[req.params.id.split('-')[0]]){
+    axios.get(`https://${serversToIdentifier[req.params.id.split('-')[0]]}/${process.env.secretPath}/info/${req.params.id}`).then((r)=>{
       res.json(r.data)
-    }).catch((r) => {
+    }).catch((r)=>{
       res.status(400).send(`Invalid Management Key`)
     })
-  } else {
+  }else{
     console.log('oh')
     res.status(400).send(`Invalid Management Key`)
   }
-
+  
   /*res.json({
     captcha: Date.now()-70000000,
     created: Date.now()
@@ -96,213 +102,215 @@ app.get('/manageInfo/:id', (req, res) => {
 })
 
 app.get('/manage/:id', (req, res) => {
-  res.render('management', {
+  res.render('management',{
     siteKey: process.env.hCaptchaSiteKey
   })
 })
 
-app.post('/check', (req, res) => {
-  if (req.body && req.body.url && req.body.url.length < 300) {
+app.post('/check',(req,res)=>{
+  if(req.body && req.body.url && req.body.url.length < 300){
     hookSend(`Someone is checking the URL ${req.body.url}`)
-
-    checkURL(req.body.url).then(() => {
-      res.json({ can: true })
-    }).catch(() => {
-      res.status(400).json({ can: false })
+    
+    checkURL(req.body.url).then(()=>{
+      res.json({can:true})
+      hookSend(`The check succeeded`)
+    }).catch(()=>{
+      res.status(400).json({can:false})
+      hookSend(`The check failed`)
     })
-  } else {
-    res.status(400).json({ can: false })
+  }else{
+    res.status(400).json({can:false})
   }
 })
 
-app.post('/captcha', async (req, res) => {
-  if (req.body && req.body.hKey && req.body.mk) {
+app.post('/captcha',async(req,res)=>{
+  if(req.body && req.body.hKey && req.body.mk){
     verify(process.env.hCaptchaSecret, req.body.hKey)
-      .then(async (data) => {
-        if (data.success === true) {
-          if (serversToIdentifier[req.body.mk.split('-')[0]]) {
-            axios.post(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}/captcha`, {
-              manageKey: req.body.mk
-            }).then(() => {
-              res.send(`OK`)
-              hookSend(`Someone did their captcha nice`)
-            }).catch(() => {
-              res.status(400).send(`Invalid Management Key`)
-            })
-          } else {
+    .then(async(data) => {
+      if (data.success === true) {
+        if(serversToIdentifier[req.body.mk.split('-')[0]]){
+          axios.post(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}/captcha`,{
+            manageKey: req.body.mk
+          }).then(()=>{
+            res.send(`OK`)
+            hookSend(`Someone did their captcha nice`)
+          }).catch(()=>{
             res.status(400).send(`Invalid Management Key`)
-          }
-        } else {
-          res.status(400).send(`*le gasp* You ARE a robot!`)
+          })
+        }else{
+          res.status(400).send(`Invalid Management Key`)
         }
-      })
-      .catch((e) => {
-        console.error(e);
+      } else {
         res.status(400).send(`*le gasp* You ARE a robot!`)
-      });
-
-  } else {
+      }
+    })
+    .catch((e)=>{
+      console.error(e);
+      res.status(400).send(`*le gasp* You ARE a robot!`)
+    });
+    
+  }else{
     res.status(500).send(`Server Error`)
   }
 })
 
-app.post('/apply', async (req, res) => {
-  if (req.body && req.body.hKey && req.body.links && req.body.mk) {
+app.post('/apply',async(req,res)=>{
+  if(req.body && req.body.hKey && req.body.links && req.body.mk){
     verify(process.env.hCaptchaSecret, req.body.hKey)
-      .then(async (data) => {
-        if (data.success === true) {
-          let urls = req.body.links
-          let shortURLs = []
-          if (urls.length < 16 && urls.length > 0) {
-            can = ``
-
-            for (let i = 0; i < urls.length; i++) {
-              if (urls[i].length < 300) {
-                try {
-                  await checkURL(urls[i])
-                } catch (err) {
-                  can = `Error checking URL ${urls[i]}`
-                  break;
-                }
-              } else {
-                can = `URLs must be under 300 characters in length`
+    .then(async(data) => {
+      if (data.success === true) {
+        let urls = req.body.links
+        let shortURLs = []
+        if(urls.length < 16 && urls.length > 0){
+          can = ``
+          
+          for(let i=0; i<urls.length; i++){
+            if(urls[i].length < 300){
+              try {
+                await checkURL(urls[i])
+              } catch (err) {
+                can = `Error checking URL ${urls[i]}`
+                break;
+              }
+            }else{
+              can = `URLs must be under 300 characters in length`
+              break;
+            }
+          }
+          if(can == ``){
+            for(let i=0; i<urls.length; i++){
+              try {
+                const res = await gotiny.set(urls[i])
+                shortURLs.push(res[0].code)
+              } catch (err) {
+                can = `Error shortening URL ${urls[i]}`
                 break;
               }
             }
-            if (can == ``) {
-              for (let i = 0; i < urls.length; i++) {
-                try {
-                  const res = await gotiny.set(urls[i])
-                  shortURLs.push(res[0].code)
-                } catch (err) {
-                  can = `Error shortening URL ${urls[i]}`
-                  break;
-                }
-              }
-              if (can == ``) {
-                // Yay
-                if (serversToIdentifier[req.body.mk.split('-')[0]]) {
-                  axios.put(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}`, {
-                    manageKey: req.body.mk,
-                    urls: shortURLs
-                  }).then(() => {
-                    hookSend(`A stream was updated with the new URLs ${urls.join(' ')}`)
-                    res.send(`OK`)
-                  }).catch(() => {
-                    res.status(400).send(`Invalid Management Key`)
-                  })
-                } else {
+            if(can == ``){
+              // Yay
+              if(serversToIdentifier[req.body.mk.split('-')[0]]){
+                axios.put(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}`,{
+                  manageKey: req.body.mk,
+                  urls: shortURLs
+                }).then(()=>{
+                  hookSend(`A stream was updated with the new URLs ${urls.join(' ')}`)
+                  res.send(`OK`)
+                }).catch(()=>{
                   res.status(400).send(`Invalid Management Key`)
-                }
-              } else {
-                res.status(400).send(can)
+                })
+              }else{
+                res.status(400).send(`Invalid Management Key`)
               }
-            } else {
+            }else{
               res.status(400).send(can)
             }
-          } else {
-            res.status(400).send(`You must have 1-15 URLs`)
+          }else{
+            res.status(400).send(can)
           }
-        } else {
-          res.status(400).send(`*le gasp* You ARE a robot!`)
+        }else{
+          res.status(400).send(`You must have 1-15 URLs`)
         }
-      })
-      .catch((e) => {
-        console.error(e);
+      } else {
         res.status(400).send(`*le gasp* You ARE a robot!`)
-      });
-
-  } else {
+      }
+    })
+    .catch((e)=>{
+      console.error(e);
+      res.status(400).send(`*le gasp* You ARE a robot!`)
+    });
+    
+  }else{
     res.status(500).send(`Server Error`)
   }
 })
 
-app.delete('/stop', (req, res) => {
-  if (req.body && req.body.streamKey && req.body.mk) {
-    if (serversToIdentifier[req.body.mk.split('-')[0]]) {
-      axios.post(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}/del`, {
+app.delete('/stop',(req,res)=>{
+  if(req.body && req.body.streamKey && req.body.mk){
+    if(serversToIdentifier[req.body.mk.split('-')[0]]){
+      axios.post(`https://${serversToIdentifier[req.body.mk.split('-')[0]]}/${process.env.secretPath}/del`,{
         streamKey: req.body.streamKey
-      }).then(() => {
+      }).then(()=>{
         res.send(`OK`)
         hookSend(`Someone deleted their stream ):::`)
-      }).catch((e) => {
+      }).catch((e)=>{
         console.log(e)
         res.status(400).send(`Invalid Management Key`)
       })
-    } else {
+    }else{
       res.status(400).send(`Invalid Management Key`)
     }
-  } else {
+  }else{
     res.status(400).send(`Missing parameters`)
   }
 })
 
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
   console.log('A user connected');
   let state = -1
   let shortURLs = []
 
-  let ohNo = function (err) {
-    socket.emit('ohNo', err);
+  let ohNo = function(err){
+    socket.emit('ohNo',err);
     socket.disconnect();
   }
 
-  let update = function (text) {
-    socket.emit('update', text)
+  let update = function(text){
+    socket.emit('update',text)
   }
 
-  if (slots == 0) {
+  if(slots == 0){
     ohNo(`We don't have any slots for new servers. Check back in a few days.`)
 
-  } else {
+  }else{
     state = 0
-    socket.emit(`OK`, `Welcome to Wendys, may I take your order?`)
+    socket.emit(`OK`,`Welcome to Wendys, may I take your order?`)
   }
 
-  socket.on('hCaptcha', (key) => {
-    if (state == 0) {
+  socket.on('hCaptcha',(key)=>{
+    if(state == 0){
       update(`Making sure you aren't a robot...`)
       verify(process.env.hCaptchaSecret, key)
-        .then((data) => {
-          if (data.success === true) {
-            socket.emit('timeForUrls', true)
-            state = 1
-          } else {
-            ohNo('Invalid HCaptcha token')
-          }
-        })
-        .catch((e) => {
-          console.error(e);
+      .then((data) => {
+        if (data.success === true) {
+          socket.emit('timeForUrls',true)
+          state = 1
+        } else {
           ohNo('Invalid HCaptcha token')
-        });
+        }
+      })
+      .catch((e)=>{
+        console.error(e);
+        ohNo('Invalid HCaptcha token')
+      });
     }
   })
 
-  socket.on('urls', async (urls) => {
-    if (state == 1) {
-      if (urls.length < 16 && urls.length > 0) {
+  socket.on('urls',async (urls)=>{
+    if(state == 1){
+      if(urls.length < 16 && urls.length > 0){
         state = 2
 
         hookSend(`Possible new stream with URLs ${urls.join(' ')}`)
-
-        for (let i = 0; i < urls.length; i++) {
-          update(`Checking video URLs (${i + 1}/${urls.length})...`)
-          if (urls[i].length < 300) {
+        
+        for(let i=0; i<urls.length; i++){
+          update(`Checking video URLs (${i+1}/${urls.length})...`)
+          if(urls[i].length < 300){
             try {
               await checkURL(urls[i])
             } catch (err) {
               ohNo(`Invalid video URL ${urls[i]}`);
               break;
             }
-          } else {
+          }else{
             ohNo('URLS must be under 300 characters in length.');
             break;
           }
         }
-        if (state == 2) {
-          for (let i = 0; i < urls.length; i++) {
-            update(`Shortening video URLs (${i + 1}/${urls.length})...`)
-            if (urls[i].length < 300) {
+        if(state == 2){
+          for(let i=0; i<urls.length; i++){
+            update(`Shortening video URLs (${i+1}/${urls.length})...`)
+            if(urls[i].length < 300){
               try {
                 const res = await gotiny.set(urls[i])
                 shortURLs.push(res[0].code)
@@ -310,39 +318,39 @@ io.on('connection', function (socket) {
                 ohNo(`Error shortening link ${urls[i]}`);
                 break;
               }
-            } else {
+            }else{
               ohNo('URLS must be under 300 characters in length.');
               break;
             }
           }
-          if (state == 2) {
+          if(state == 2){
             // Yay
             state = 3
-            socket.emit('streamKeyTime', true)
+            socket.emit('streamKeyTime',true) 
           }
         }
       }
     }
   })
 
-  socket.on('streamKey', (key) => {
-    if (state == 3) {
+  socket.on('streamKey',(key)=>{
+    if(state == 3){
       state = 4
 
       update(`Checking stream key...`)
-      if (key.length > 25 || key.length < 3) {
+      if(key.length > 25 || key.length < 3){
         ohNo(`Invalid stream key length`)
-      } else {
-        exists(key).then(() => {
+      }else{
+        exists(key).then(()=>{
           ohNo(`We are already streaming to that stream key! Go to the management page and end it.`)
-        }).catch(() => {
+        }).catch(()=>{
           // Yessir
 
           update(`Testing stream key...`)
           let hmm = true
-          setTimeout(() => {
+          setTimeout(()=>{
             hmm = false
-          }, 3000)
+          },3000)
           runCommand(
             'ffmpeg',
             `-re -i ./Loop.mp4 -c copy -f flv rtmp://a.rtmp.youtube.com/live2/${key}`,
@@ -350,17 +358,17 @@ io.on('connection', function (socket) {
               console.log(data)
             },
             () => {
-              if (hmm) {
+              if(hmm){
                 ohNo(`Invalid stream key!`)
-              } else {
+              }else{
                 console.log(`Holy shi there's actually a new stream`)
                 update(`Starting stream...`)
-                add(key, shortURLs).then((mk) => {
+                add(key,shortURLs).then((mk)=>{
                   console.log(`Holy shi it's starting holy shi`)
                   update(`Redirecting to management page...`)
-                  socket.emit('management', mk)
-                  hookSend(`New stream dispatched, look at above messages for possible video URLs.`)
-                }).catch((e) => {
+                  socket.emit('management',mk)
+                  hookSend(`New stream dispatched to server **${mk[0]}**, look at above messages for possible video URLs.`)
+                }).catch((e)=>{
                   ohNo(e)
                 })
               }
@@ -370,65 +378,67 @@ io.on('connection', function (socket) {
       }
     }
   })
-
+  
   socket.on('disconnect', () => {
     state = -2
   });
 });
 
-http.listen(3000, function () {
-  console.log('listening on *:3000');
+http.listen(3000, function() {
+   console.log('listening on *:3000');
 });
 
 // Technical techies tech tech
 
-function checkURL(url) {
-  return new Promise((res, rej) => {
-    if (!url.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig)) {
+function checkURL(url){
+  console.log(url)
+  return new Promise((res,rej)=>{
+    if(!url.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig)){
       rej()
-    } else {
+    }else{
       url = url.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig)[0];
       let can = false
+      console.log(url)
       runCommand(
         'ffprobe',
         `-loglevel error -show_entries stream=codec_type -of default=nw=1 ${url}`,
         (data) => {
-          if (data.toString().includes('codec_type=video') || data.toString().includes('codec_type=audio')) {
+          if(data.toString().includes('codec_type=video') || data.toString().includes('codec_type=audio')){
             can = true
           }
         },
         (...a) => {
-          if (a[0] == 0) {
-            if (can) {
+          if(a[0] == 0){
+            if(can){
               res()
-            } else {
+            }else{
               rej()
             }
-          } else {
+          }else{
             rej()
           }
         }
-      )
+      ) 
     }
   })
 }
 
-async function calculateCapacity() {
+async function calculateCapacity(){
   let tempCapacity = 0
   let tempSlots = 0
   let tempCapacityByServer = {}
-  for (let i = 0; i < servers.length; i++) {
-    try {
+  for(let i=0; i<servers.length;i++){
+    try{
       let r = await axios.get(`https://${servers[i]}/${secretPath}/capacity`)
-      if (r.status == 200) {
+      if(r.status == 200){
         tempCapacity += parseInt(r.data)
         tempCapacityByServer[servers[i]] = parseInt(r.data)
-        tempSlots += 40 - parseInt(r.data)
-      } else {
+        tempSlots += 40-parseInt(r.data)
+      }else{
         tempCapacity += 40
         tempCapacityByServer[servers[i]] = 40
       }
-    } catch (e) {
+    }catch(e){
       console.error(e);
       tempCapacity += 40
       tempCapacityByServer[servers[i]] = 40
@@ -439,70 +449,70 @@ async function calculateCapacity() {
   slots = tempSlots
 
   db.get("minutes").then(value => {
-    db.set("minutes", value + capacity).then(() => {
-      console.log(`Updated minutes streamed to ${value + capacity}`)
+    db.set("minutes", value+capacity).then(() => {
+      console.log(`Updated minutes streamed to ${value+capacity}`)
       minutes = value + capacity
     });
   });
 
-  setTimeout(() => {
+  setTimeout(()=>{
     calculateCapacity()
-  }, 60000)
+  },60000)
 }
 calculateCapacity()
 
-function exists(key) {
-  return new Promise(async (res, rej) => {
+function exists(key){
+  return new Promise(async(res,rej)=>{
     let has = false
-    for (let i = 0; i < servers.length; i++) {
-      try {
+    for(let i=0; i<servers.length;i++){
+      try{
         let r = await axios.get(`https://${servers[i]}/${secretPath}/has/${encodeURIComponent}`)
-        if (r.status == 200) {
+        if(r.status == 200){
           has = true
         }
-      } catch { }
+      }catch{}
     }
-    if (has) {
+    if(has){
       res()
-    } else {
+    }else{
       rej()
     }
   })
 };
 
-function add(key, urls) {
+function add(key, urls){
   const sortable = Object.entries(capacityByServer)
-    .sort(([, a], [, b]) => a - b)
+    .sort(([,a],[,b]) => a-b)
     .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
   const server = Object.keys(sortable)[0]
-
-  return new Promise(async (res, rej) => {
-    try {
-      let r = await axios.post(`https://${server}/${secretPath}/add`, {
+  
+  return new Promise(async(res,rej)=>{
+    try{
+      let r = await axios.post(`https://${server}/${secretPath}/add`,{
         urls: urls,
         streamKey: key
       })
       console.log(r)
-      if (r.status == 200) {
+      if(r.status == 200){
         res(r.data.managementKey)
-      } else {
-        if (r.data == 'Nope! Sorry! No room here.') {
+      }else{
+        if(r.data == 'Nope! Sorry! No room here.'){
           rej(`All of our servers are out of room for new streams! Sorry!`)
-        } else {
-          rej(`An unexpected error has occured. Sorry!`)
+        }else{
+          rej(`An unexpected error has occured. Sorry!`) 
         }
       }
-    } catch (r) {
+    }catch(r){
       console.log(r)
-      if (r.data == 'Nope! Sorry! No room here.') {
+      if(r.data == 'Nope! Sorry! No room here.'){
         rej(`All of our servers are out of room for new streams! Sorry!`)
-      } else {
-        rej(`An unexpected error has occured. Sorry!`)
+      }else{
+        rej(`An unexpected error has occured. Sorry!`) 
       }
     }
   })
 };
 
-(async () => {
+(async()=>{
   // Async environment for testing, not required.
 })();
