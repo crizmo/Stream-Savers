@@ -46,7 +46,7 @@ let stream_key = ``;
 
     const formData = new FormData(document.getElementById('add'));
 
-    if(formData.get('videoLink').match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm)){
+    if(formData.get('videoLink').match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig)){
 
       if(formData.get('videoLink').startsWith('https://www.youtube.com') || formData.get('videoLink').startsWith('https://youtu.be')){
         Swal.fire({
