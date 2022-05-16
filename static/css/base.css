@@ -132,6 +132,36 @@ html {
     margin-top: 170px;
 }
 
+.credits {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+/* 
+.credits-title {
+    color: black;
+} */
+
+.credits-text {
+    color: black;
+    font-weight: bold;
+    font-size: large;
+}
+
+.credits-text a {
+    color: gold;
+}
+
+.credits-card {
+    background: url(https://i.pinimg.com/736x/d4/a6/33/d4a63344a6af34bdaa4465a94d516cd0.jpg);
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 /* footer */
 
