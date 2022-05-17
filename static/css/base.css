@@ -28,6 +28,11 @@ html {
     margin-right: 50px;
 }
 
+.nav-link:hover {
+    transform: scale(1.15);
+    transition: all 0.5s ease-in-out;
+}
+
 .navbar {
     padding: 20px;
 }
@@ -137,10 +142,10 @@ html {
     margin-bottom: 20px;
 }
 
-/* 
+
 .credits-title {
     color: black;
-} */
+}
 
 .credits-text {
     color: black;
@@ -148,12 +153,22 @@ html {
     font-size: large;
 }
 
-.credits-text a {
-    color: gold;
+/* .credits-text a {
+    color: aqua;
+} */
+
+.credits-ppl {
+    color: aqua;
+    font-size: large;   
+}
+
+.credits-ppl:hover {
+    transform: scale(1.15);
+    transition: all 0.5s ease-in-out;
 }
 
 .credits-card {
-    background: url(https://i.pinimg.com/736x/d4/a6/33/d4a63344a6af34bdaa4465a94d516cd0.jpg);
+    background: url(https://cdna.artstation.com/p/assets/images/images/028/153/436/large/denis-istomin-relief3.jpg?1593628704);
     background-size: cover;
     background-position: center;
     border-radius: 10px;
@@ -429,6 +444,22 @@ html {
     .how-it-works {
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+
+    .credits-text {
+        color: black;
+        font-weight: bold;
+        font-size: large;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    
+    /* .credits-text a {
+        color: aqua;
+    } */
+    
+    .credits-ppl {
+        color: aqua;
+        font-size: medium;   
     }
 
     /* add page */
