@@ -14,7 +14,7 @@ html {
 }
 
 .bg-dark {
-    background-image: url(../img/back.jpg);
+    background-image: url(../img/blue-back.png);
     background-size: cover;
     position: relative;
     background-attachment: fixed;
@@ -158,7 +158,7 @@ html {
 } */
 
 .credits-ppl {
-    color: aqua;
+    color: #4dccff;
     font-size: large;   
 }
 
@@ -168,7 +168,7 @@ html {
 }
 
 .credits-card {
-    background: url(https://cdna.artstation.com/p/assets/images/images/028/153/436/large/denis-istomin-relief3.jpg?1593628704);
+    background: url(eee);
     background-size: cover;
     background-position: center;
     border-radius: 10px;
@@ -187,8 +187,8 @@ html {
 
 .foot a {
     font: bolder;
-    margin: 50px;
-    color: #1b1b1b;
+    margin: 80px;
+    color: #4dccff;
 }
 
 
@@ -197,7 +197,7 @@ html {
 .continuebtn {
     padding-left: 100px;
     padding-right: 100px;
-    margin-left: 35%;
+    margin-left: 40%;
     margin-top: 30px;
 }
 
@@ -209,12 +209,12 @@ html {
 /* add hidden */
 
 .ytvideo {
-    margin-left: 200px;
+    margin-left: 420px;
 }
 
 .addsubmit {
     /* margin-right: 500px; */
-    margin-left: 38%;
+    margin-left: 42%;
     margin-bottom: 5px;
     padding-right: 100px;
     padding-left: 100px;
@@ -223,7 +223,7 @@ html {
 .finishsubmit {
     padding-left: 80px;
     padding-right: 80px;
-    margin-left: 39.3%;
+    margin-left: 42.9%;
     margin-top: 20px;
     color: black;
 }
@@ -456,17 +456,25 @@ html {
     /* .credits-text a {
         color: aqua;
     } */
+
+    .credits-card {
+        background: url(eee);
+    }
+    
+    .credits-text {
+        color: white;
+    }
     
     .credits-ppl {
-        color: aqua;
+        color: #4dccff;
         font-size: medium;   
     }
 
     /* add page */
 
     .continuebtn {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
         margin-left: 27%;
     }
 
