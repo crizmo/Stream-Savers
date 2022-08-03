@@ -43,6 +43,8 @@ function msToTime(ms) {
       const formData = new FormData(document.getElementById('add'));
   
       if(formData.get('videoLink').match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig)){
+        //.replace("anonfiles.com","anonfile.free-24-7-loops.repl.co"
+      let lnk = formData.get('videoLink').replace("anonfiles.com","anonfile.free-24-7-loops.repl.co");
         Swal.fire('Checking URL...')
         Swal.showLoading()
         fetch('../check',{
@@ -51,7 +53,7 @@ function msToTime(ms) {
             'Content-Type':'Application/JSON'
           },
           'body':JSON.stringify({
-            url: formData.get('videoLink')
+            url: lnk
           })
         }).then((r)=>{
           if(r.status == 200){
@@ -60,7 +62,7 @@ function msToTime(ms) {
               icon:'success'
             })
   
-            newVideo(formData.get('videoLink'))
+            newVideo(lnk)
           }else{
             Swal.fire({
               title: 'Uh-oh',

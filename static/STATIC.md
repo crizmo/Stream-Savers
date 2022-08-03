@@ -1,5 +1,4 @@
 # Static folder
-
 All files in this folder will be directed to /static.
 
 So, if you put something in /static, like "cool_image.png"

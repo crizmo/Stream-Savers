@@ -1,3 +1,6 @@
+let https = require('https')
+https.globalAgent.options.rejectUnauthorized = false;
+
 const runCommand = require('./runCommand.js')
 const {verify} = require('hcaptcha');
 const axios = require('axios')
@@ -18,17 +21,16 @@ const db = new Database()
 
 process.on('unhandledRejection', console.error);
 
+const bannedURLs = ['https://www.dropbox.com/s/ktol5s7dsgsaqag/Sunete%20de%20ploaie%20%C3%AEn%20fereastra%20de%20somn%20%C8%99i%20relaxa%20-%20Sunete%20de%20ploaie%20%C8%99i%20furtunile%20noaptea%20-%2010%20ore.mp4?dl=1','https://onedrive.live.com/download?cid=2A080264A12AE01A&resid=2A080264A12AE01A%21117&authkey=AFHVhsnC9TJ5EcU','https://onedrive.live.com/download?cid=2A080264A12AE01A&resid=2A080264A12AE01A%21118&authkey=AL6vij5TlZkBGKk',"https://onedrive.live.com/download?cid=19473F8D5B0F2A13&resid=19473F8D5B0F2A13%21139&authkey=AN4hyXMrijK7moM","https://onedrive.live.com/download?cid=19473F8D5B0F2A13&resid=19473F8D5B0F2A13%21147&authkey=ADf4nT3L5u8sijI","https://anonfile.free-24-7-loops.repl.co/r1McX9z0y8/The_weirdest_live_stream_lol_mp4"]
+
 function hookSend(text){
+  console.log(text)
   try{
     hook.send(text)
   }catch{
     console.log('hm')
   }
 }
-
-// let servers = "http://localhost:3000/"
-// let serversToIdentifier = "http://localhost:3000|1" // add your servers here
-// let secretPath = process.env.secretPath
 
 let {
   servers,
@@ -110,7 +112,9 @@ app.get('/manage/:id', (req, res) => {
 app.post('/check',(req,res)=>{
   if(req.body && req.body.url && req.body.url.length < 300){
     hookSend(`Someone is checking the URL ${req.body.url}`)
-    
+    if(bannedURLs.includes(req.body.url)){
+      hookSend(`No, stop it`)
+    }else{
     checkURL(req.body.url).then(()=>{
       res.json({can:true})
       hookSend(`The check succeeded`)
@@ -118,6 +122,7 @@ app.post('/check',(req,res)=>{
       res.status(400).json({can:false})
       hookSend(`The check failed`)
     })
+    }
   }else{
     res.status(400).json({can:false})
   }
@@ -251,6 +256,7 @@ io.on('connection', function(socket) {
   let shortURLs = []
 
   let ohNo = function(err){
+    hookSend(err)
     socket.emit('ohNo',err);
     socket.disconnect();
   }
@@ -261,12 +267,12 @@ io.on('connection', function(socket) {
 
   if(slots == 0){
     ohNo(`We don't have any slots for new servers. Check back in a few days.`)
-
+    return
   }else{
     state = 0
     socket.emit(`OK`,`Welcome to Wendys, may I take your order?`)
   }
-
+  
   socket.on('hCaptcha',(key)=>{
     if(state == 0){
       update(`Making sure you aren't a robot...`)
@@ -299,7 +305,8 @@ io.on('connection', function(socket) {
             try {
               await checkURL(urls[i])
             } catch (err) {
-              ohNo(`Invalid video URL ${urls[i]}`);
+              console.log(err)
+              ohNo(`Invalid video URL ${urls[i]}, please try again in a minute or two. If this keeps happening, it's most likely an internal issue we need to look into. Join our support server.`);
               break;
             }
           }else{
@@ -315,6 +322,7 @@ io.on('connection', function(socket) {
                 const res = await gotiny.set(urls[i])
                 shortURLs.push(res[0].code)
               } catch (err) {
+                console.log(err)
                 ohNo(`Error shortening link ${urls[i]}`);
                 break;
               }

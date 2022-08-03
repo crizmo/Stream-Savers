@@ -62,15 +62,15 @@ let stream_key = ``;
             icon: 'error'
           })
         }else{
-          let lnk = formData.get('videoLink')
-          if(lnk.startsWith('https://drive.google.com/file/d/')){
-            lnk = `https://drive.google.com/uc?export=download&id=${lnk.split('/')[5]}`
-          }
+          let lnk = formData.get('videoLink').replace("anonfiles.com","anonfile.free-24-7-loops.repl.co")
           if(lnk.startsWith(`https://drive.google.com/uc?export=download&id=`)){
             lnk = lnk + `&confirm=t`
           }
-          
-          Swal.fire('Checking URL...')
+          if(lnk.startsWith('https://drive.google.com/uc?export=download&id=')){
+            Swal.fire("Google drive isn't recommend anymore")
+          }else{
+            Swal.fire('Checking URL...')
+          }
           Swal.showLoading()
           fetch('./check',{
             'method':'POST',//MAN
@@ -91,7 +91,7 @@ let stream_key = ``;
             }else{
               Swal.fire({
                 title: 'Uh-oh',
-                text: "The link you gave isn't valid. Remember to watch the tutorial video.",
+                text: "The link you gave isn't valid. Try a different video provider (e.g. OneDrive instead of Dropbox), or join our support Discord.",
                 icon: 'error'
               })
             }
@@ -99,7 +99,7 @@ let stream_key = ``;
             console.log(e)
             Swal.fire({
               title: 'Uh-oh',
-              text: "The link you gave isn't valid. Remember to watch the tutorial video.",
+              text: "The link you gave isn't valid. Try a different video provider (e.g. OneDrive instead of Dropbox), or join our support Discord.",
               icon: 'error'
             })
           })
