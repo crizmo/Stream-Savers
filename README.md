@@ -1,7 +1,7 @@
 # Stream Savers main website !
 The main website for Stream Savers. This does not contain the streaming server source code.
 
-![A snippet of streamsavers.live](https://cdn.discordapp.com/attachments/966225601616810014/969124357618151444/Screenshot_from_2022-04-28_16-33-39.png)
+![A snippet of streamsavers.live](https://cdn.discordapp.com/attachments/970974581944885268/1009014754431467550/ss_main.png)
 
 Main deployment: [streamsavers.live](https://streamsavers.live)
 
@@ -10,7 +10,7 @@ Minimal loop streaming program: [Click here](https://github.com/codingMASTER398/
 Streaming Server: [Click here](https://github.com/codingMASTER398/Stream-Savers-Streaming-Server)
 
 ## Setup
-- Node.js 16+ reccomended
+- Node.js 16+ recommended
 - Install a process.env handler
 - If not on Replit, swap out ReplDB for some other (used to store minutes streamed)
 - In process.env:
